@@ -172,8 +172,9 @@ class ModelCreator:
         y_pred = np.argmax(np.rint(predictions), axis=1)
         y_true = self.test_generator.classes
         labels = (self.test_generator.class_indices)
-        print(labels)
-        print(tf.math.confusion_matrix(labels=y_true, predictions=y_pred))
+        print('\nLabels:\n\n', labels)
+        print('\nConfusion Matrix:\n\n', tf.math.confusion_matrix(
+            labels=y_true, predictions=y_pred))
 
     def save_model(self):
         ts = str(datetime.utcnow()).split(' ')[0].replace('-', '_')
