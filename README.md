@@ -1,14 +1,14 @@
-Deep Learning Based CAPTCHA Solver
+# Deep Learning Based CAPTCHA Solver
 
 CAPTCHA stands for Completely Automated Public Turing test to tell Computers and Humans Apart. CAPTCHA determines whether the user is real or a spam robot. Automatic decoding of CAPTCHA is a critical issue for web scraping. The purpose of this deep learning based CAPTCHA solver is to automate scraping of a particular website. 
 
 
-Dataset Description
+## Dataset Description
 
 The dataset consists of 1862 PNG images of text based CAPTCHA. 1490 images have been used for training and the remaining images for testing purpose. Each image is of 5 character set and the character set is defined as small letters and digits. The dimensions of the CAPTCHA images are 50x200. The images consist of noise in the form of bold lines crossing characters.
 
 
-Preprocessing
+## Preprocessing
 
 Noise removal and character segmentation are the two main steps in preprocessing of CAPTCHA images. 
 
@@ -20,12 +20,15 @@ The last step in preprocessing is character segmentation. The individual charact
 
 Preprocessing steps are illustrated below. CAPTCHA images do not have any borders. Borders around images are added for clarification.
 
+![preprocessing](img/preprocess.png)
 
-Model
+## Model
 
-The model developed for the CAPTCHA solver uses Convolutional Neural Network. It consists of the input layer, convolutional layers, max pooling layers, flatten layers, dropout layers and dense layers. An Adam optimizer is used with cross-entropy loss. A validation split of 0.2 is used. The batch size used is 32. While the model was trained with 10 epochs, the model typically converged in 5 epochs. All character images passed into the network are size 40x50x1. The accuracy obtained after 10 epochs is 0.9887.
+The model developed for the CAPTCHA solver uses Convolutional Neural Network. It consists of the input layer, convolutional layers, max pooling layers, flatten layers, dropout layers and dense layers. An Adam optimizer is used with cross-entropy loss. A validation split of 0.2 is used. The batch size used is 32. While the model was trained with 10 epochs, the model typically converged in 5 epochs. All character images passed into the network are size 40x50x1. 
 
+The accuracy obtained after 10 epochs is 0.9887.
 
+```bash
  1/56 [..............................] - ETA: 7s - loss: 1.8775e-06 - accuracy: 1.0000
  3/56 [>.............................] - ETA: 1s - loss: 6.6801e-04 - accuracy: 1.0000
  4/56 [=>............................] - ETA: 3s - loss: 8.9367e-04 - accuracy: 1.0000
@@ -87,3 +90,4 @@ tf.Tensor(
  [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 79  0  1]
  [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 74  0]
  [ 0  0  0  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 78]], shape=(23, 23), dtype=int32)
+```
