@@ -5,26 +5,26 @@ CAPTCHA stands for Completely Automated Public Turing test to tell Computers and
 
 ## Dataset Description
 
-The dataset consists of 1862 PNG images of text based CAPTCHA. 1490 images have been used for training and the remaining images for testing purpose. Each image is of 5 character set and the character set is defined as small letters and digits. The dimensions of the CAPTCHA images are 50x200. The images consist of noise in the form of bold lines crossing characters.
+The dataset consists of 1862 PNG images of text based CAPTCHA. 1490 images have been used for training and the remaining images for testing purpose. Each image is of 5 character set and the character set is defined as all English small letters and digits. The dimensions of the CAPTCHA images are 50x200. The images consist of noise in the form of bold lines crossing characters.
 
 
 ## Preprocessing
 
 Noise removal and character segmentation are the two main steps in preprocessing of CAPTCHA images. 
 
-First, the RGB image is converted to a greyscale image; all pixel values are in the range 0–255. Next, the background color is converted to white by detecting character boundaries (by detecting changes in RGB values for each pixel in a column). 
+First, the RGB image is converted to a greyscale image; all pixel values are in the range 0–255. Next, the background color is converted to white by detecting character boundaries (detecting changes in RGB values for each pixel in a column). 
 
-Once the image is converted to greyscale and background is converted to white, the next step of preprocessing is removing noise. As mentioned earlier, a bold line is present in the image that is crossing characters. Lines are removed from images by converting RGB values < 10 are converted to 255 (white). Next, the images are converted to black-white by converting RGB values < 255 to 0 (black).
+Once the image is converted to greyscale and background is converted to white, the next step is removing noise. As mentioned earlier, a bold line is present in the image that is crossing characters. Lines are removed from images by converting RGB values < 10 are converted to 255 (white). Next, the images are converted to black-white by converting RGB values < 255 to 0 (black).
 
 The last step in preprocessing is character segmentation. The individual characters are segmented out of the image in order to train a model on the character classification task. The characters are mostly non-intersecting. But, there are some few cases that characters are touching each other. The segmentation step is the most challenging step in preprocessing and tried to be clarified in code comments. 
 
-Preprocessing steps are illustrated below. CAPTCHA images do not have any borders. Borders are added for clarification.
+Preprocessing steps are illustrated below.
 
 ![preprocessing](img/preprocess.png)
 
 ## Model
 
-The model developed for the CAPTCHA solver uses Convolutional Neural Network. It consists of the input layer, convolutional layers, max pooling layers, flatten layers, dropout layers and dense layers. An Adam optimizer is used with cross-entropy loss. A validation split of 0.2 is used. The batch size used is 32. While the model was trained with 10 epochs, the model typically converged in 5 epochs. All character images passed into the network are size 40x50x1. The accuracy obtained after 10 epochs is 0.99.
+The model developed for the CAPTCHA solver uses Convolutional Neural Network. It consists of the input, convolutional, max pooling, flatten, dropout and dense layers. An Adam optimizer is used with cross-entropy loss. A validation split of 0.2 is used. While the model was trained with 10 epochs, the model typically converged in 5 epochs. All character images passed into the network are size 40x50x1. The accuracy obtained after 10 epochs is 0.99.
 
 ![model accuracy](img/model_accuracy.png)
 
@@ -94,4 +94,20 @@ Confusion Matrix:
  [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 79  0  1]
  [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 74  0]
  [ 0  0  0  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 78]], shape=(23, 23), dtype=int32)
+```
+
+## Usage
+
+```python
+import os
+from pathlib import Path
+
+from catpcha_decoder import decode_captcha
+
+base_dir = Path(__file__).resolve().parent
+filepath = os.path.join(base_dir, 'img', '2a3cd.png')
+model_path = os.path.join(base_dir, 'model_2021_11_07.h5')
+
+captcha = decode_captcha(filepath, model_path)
+print('Decoded Captcha:', captcha)
 ```
