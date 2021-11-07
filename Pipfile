@@ -8,6 +8,7 @@ opencv-python = "*"
 tensorflow-cpu = "==2.4"
 pillow = "*"
 scipy = "*"
+matplotlib = "*"
 
 [dev-packages]
 pylint = "*"

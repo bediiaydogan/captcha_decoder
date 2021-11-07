@@ -41,6 +41,6 @@ def decode_captcha(filepath, model_path):
 if __name__ == '__main__':
     base_dir = Path(__file__).resolve().parent
     filepath = os.path.join(base_dir, 'img', '2a3cd.png')
-    model_path = os.path.join(base_dir, 'model_2021_11_05.h5')
+    model_path = os.path.join(base_dir, 'model_2021_11_07.h5')
     captcha = decode_captcha(filepath, model_path)
     print('Decoded Captcha:', captcha)

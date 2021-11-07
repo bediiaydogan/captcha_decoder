@@ -18,75 +18,79 @@ Once the image is converted to greyscale and background is converted to white, t
 
 The last step in preprocessing is character segmentation. The individual characters are segmented out of the image in order to train a model on the character classification task. The characters are mostly non-intersecting. But, there are some few cases that characters are touching each other. The segmentation step is the most challenging step in preprocessing and tried to be clarified in code comments. 
 
-Preprocessing steps are illustrated below. CAPTCHA images do not have any borders. Borders around images are added for clarification.
+Preprocessing steps are illustrated below. CAPTCHA images do not have any borders. Borders are added for clarification.
 
 ![preprocessing](img/preprocess.png)
 
 ## Model
 
-The model developed for the CAPTCHA solver uses Convolutional Neural Network. It consists of the input layer, convolutional layers, max pooling layers, flatten layers, dropout layers and dense layers. An Adam optimizer is used with cross-entropy loss. A validation split of 0.2 is used. The batch size used is 32. While the model was trained with 10 epochs, the model typically converged in 5 epochs. All character images passed into the network are size 40x50x1. 
+The model developed for the CAPTCHA solver uses Convolutional Neural Network. It consists of the input layer, convolutional layers, max pooling layers, flatten layers, dropout layers and dense layers. An Adam optimizer is used with cross-entropy loss. A validation split of 0.2 is used. The batch size used is 32. While the model was trained with 10 epochs, the model typically converged in 5 epochs. All character images passed into the network are size 40x50x1. The accuracy obtained after 10 epochs is 0.99.
 
-The accuracy obtained after 10 epochs is 0.9887.
+![model accuracy](img/model_accuracy.png)
+
+![model loss](img/model_loss.png)
 
 ```bash
- 1/56 [..............................] - ETA: 7s - loss: 1.8775e-06 - accuracy: 1.0000
- 3/56 [>.............................] - ETA: 1s - loss: 6.6801e-04 - accuracy: 1.0000
- 4/56 [=>............................] - ETA: 3s - loss: 8.9367e-04 - accuracy: 1.0000
- 6/56 [==>...........................] - ETA: 2s - loss: 0.0033 - accuracy: 1.0000    
- 8/56 [===>..........................] - ETA: 2s - loss: 0.0026 - accuracy: 1.0000
-10/56 [====>.........................] - ETA: 2s - loss: 0.0055 - accuracy: 0.9969
-12/56 [=====>........................] - ETA: 1s - loss: 0.0046 - accuracy: 0.9974
-14/56 [======>.......................] - ETA: 1s - loss: 0.0039 - accuracy: 0.9978
-16/56 [=======>......................] - ETA: 1s - loss: 0.0045 - accuracy: 0.9980
-18/56 [========>.....................] - ETA: 1s - loss: 0.0045 - accuracy: 0.9983
-21/56 [==========>...................] - ETA: 1s - loss: 0.0216 - accuracy: 0.9955
-23/56 [===========>..................] - ETA: 1s - loss: 0.0229 - accuracy: 0.9946
-25/56 [============>.................] - ETA: 1s - loss: 0.0211 - accuracy: 0.9950
-27/56 [=============>................] - ETA: 1s - loss: 0.0196 - accuracy: 0.9954
-29/56 [==============>...............] - ETA: 1s - loss: 0.0437 - accuracy: 0.9935
-31/56 [===============>..............] - ETA: 0s - loss: 0.0413 - accuracy: 0.9940
-33/56 [================>.............] - ETA: 0s - loss: 0.0388 - accuracy: 0.9943
-35/56 [=================>............] - ETA: 0s - loss: 0.0432 - accuracy: 0.9929
-37/56 [==================>...........] - ETA: 0s - loss: 0.0448 - accuracy: 0.9924
-39/56 [===================>..........] - ETA: 0s - loss: 0.0588 - accuracy: 0.9912
-41/56 [====================>.........] - ETA: 0s - loss: 0.0747 - accuracy: 0.9901
-43/56 [======================>.......] - ETA: 0s - loss: 0.0713 - accuracy: 0.9906
-45/56 [=======================>......] - ETA: 0s - loss: 0.0762 - accuracy: 0.9903
-47/56 [========================>.....] - ETA: 0s - loss: 0.0847 - accuracy: 0.9894
-49/56 [=========================>....] - ETA: 0s - loss: 0.0889 - accuracy: 0.9879
-51/56 [==========================>...] - ETA: 0s - loss: 0.0855 - accuracy: 0.9884
-53/56 [===========================>..] - ETA: 0s - loss: 0.0846 - accuracy: 0.9882
-55/56 [============================>.] - ETA: 0s - loss: 0.0815 - accuracy: 0.9886
-56/56 [==============================] - 2s 35ms/step - loss: 0.0811 - accuracy: 0.9887
+ 1/56 [..............................] - ETA: 6s - loss: 6.1056e-06 - accuracy: 1.0000
+ 4/56 [=>............................] - ETA: 1s - loss: 1.3610e-04 - accuracy: 1.0000
+ 7/56 [==>...........................] - ETA: 1s - loss: 5.9785e-04 - accuracy: 1.0000
+ 9/56 [===>..........................] - ETA: 1s - loss: 6.9698e-04 - accuracy: 1.0000
+11/56 [====>.........................] - ETA: 1s - loss: 6.0570e-04 - accuracy: 1.0000
+13/56 [=====>........................] - ETA: 1s - loss: 5.6109e-04 - accuracy: 1.0000
+15/56 [=======>......................] - ETA: 1s - loss: 5.1244e-04 - accuracy: 1.0000
+17/56 [========>.....................] - ETA: 1s - loss: 4.5460e-04 - accuracy: 1.0000
+20/56 [=========>....................] - ETA: 1s - loss: 0.0209 - accuracy: 0.9984    
+22/56 [==========>...................] - ETA: 0s - loss: 0.0232 - accuracy: 0.9972
+24/56 [===========>..................] - ETA: 0s - loss: 0.0213 - accuracy: 0.9974
+26/56 [============>.................] - ETA: 0s - loss: 0.0196 - accuracy: 0.9976
+29/56 [==============>...............] - ETA: 0s - loss: 0.0520 - accuracy: 0.9957
+32/56 [================>.............] - ETA: 0s - loss: 0.0473 - accuracy: 0.9961
+34/56 [=================>............] - ETA: 0s - loss: 0.0445 - accuracy: 0.9963
+36/56 [==================>...........] - ETA: 0s - loss: 0.0443 - accuracy: 0.9957
+38/56 [===================>..........] - ETA: 0s - loss: 0.0525 - accuracy: 0.9942
+40/56 [====================>.........] - ETA: 0s - loss: 0.0579 - accuracy: 0.9937
+42/56 [=====================>........] - ETA: 0s - loss: 0.0821 - accuracy: 0.9926
+45/56 [=======================>......] - ETA: 0s - loss: 0.0862 - accuracy: 0.9924
+46/56 [=======================>......] - ETA: 0s - loss: 0.0843 - accuracy: 0.9925
+47/56 [========================>.....] - ETA: 0s - loss: 0.0914 - accuracy: 0.9914
+49/56 [=========================>....] - ETA: 0s - loss: 0.0932 - accuracy: 0.9911
+50/56 [=========================>....] - ETA: 0s - loss: 0.0914 - accuracy: 0.9912
+52/56 [==========================>...] - ETA: 0s - loss: 0.0881 - accuracy: 0.9916
+53/56 [===========================>..] - ETA: 0s - loss: 0.0887 - accuracy: 0.9912
+56/56 [==============================] - ETA: 0s - loss: 0.0850 - accuracy: 0.9915
+56/56 [==============================] - 2s 39ms/step - loss: 0.0850 - accuracy: 0.9915
 
+Test loss: 0.08501605689525604
+
+Test accuracy: 0.991530179977417
 
 Labels:
 
-{'2': 0, '3': 1, '4': 2, '5': 3, '6': 4, '7': 5, '8': 6, 'a': 7, 'b': 8, 'c': 9, 'd': 10, 'e': 11, 'f': 12, 'g': 13, 'h': 14, 'k': 15, 'm': 16, 'n': 17, 'p': 18, 'r': 19, 'w': 20, 'x': 21, 'y': 22}
+ {'2': 0, '3': 1, '4': 2, '5': 3, '6': 4, '7': 5, '8': 6, 'a': 7, 'b': 8, 'c': 9, 'd': 10, 'e': 11, 'f': 12, 'g': 13, 'h': 14, 'k': 15, 'm': 16, 'n': 17, 'p': 18, 'r': 19, 'w': 20, 'x': 21, 'y': 22}
 
 Confusion Matrix:
 
-tf.Tensor(
+ tf.Tensor(
 [[74  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
  [ 0 80  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
  [ 0  0 83  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
- [ 0  1  0 77  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0 78  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
  [ 0  0  0  0 78  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
  [ 0  0  0  0  0 77  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
  [ 0  0  0  0  0  0 75  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
- [ 1  0  0  0  0  0  0 76  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0 77  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
  [ 0  0  0  0  0  0  0  0 78  0  0  0  0  0  0  0  0  1  1  0  0  0  0]
  [ 0  0  0  0  0  0  0  0  0 82  0  0  0  0  0  0  0  0  0  0  0  0  0]
  [ 0  0  0  0  0  0  0  0  0  0 76  0  0  0  0  0  0  0  0  0  0  0  0]
  [ 0  0  0  0  0  0  0  0  0  0  0 67  0  0  0  0  1  0  0  1  0  0  0]
  [ 0  0  0  0  0  0  0  0  0  0  0  0 64  0  0  0  0  0  0  0  0  0  0]
  [ 0  0  0  0  0  0  0  0  0  0  0  0  0 82  0  0  0  0  0  0  0  0  0]
- [ 1  0  0  0  0  0  0  0  1  0  0  0  0  0 73  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0 74  0  0  1  0  0  0  0  0]
  [ 0  0  0  0  0  0  0  0  1  0  0  0  1  0  0 78  0  0  0  0  0  0  0]
- [ 1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 70  1  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 70  1  0  0  0  0  1]
  [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  1 83  0  0  0  0  0]
- [ 0  0  0  0  0  0  0  1  0  0  0  0  0  0  0  0  0  0 76  0  0  0  0]
- [ 2  0  0  0  1  1  0  0  0  0  0  0  0  0  0  0  0  0  0 71  0  0  0]
+ [ 1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 76  0  0  0  0]
+ [ 0  0  0  0  0  1  0  0  0  0  0  0  0  0  0  0  1  0  0 73  0  0  0]
  [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 79  0  1]
  [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 74  0]
  [ 0  0  0  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 78]], shape=(23, 23), dtype=int32)

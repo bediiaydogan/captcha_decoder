@@ -8,6 +8,7 @@ from datetime import datetime
 
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
@@ -159,15 +160,35 @@ class ModelCreator:
         self._generate_data(raw_path)
         self._create_data_generators(batch_size)
         self._define_model()
-        self.model.fit(
+        history = self.model.fit(
             self.train_generator,
             steps_per_epoch=self.train_generator.samples//batch_size,
             epochs=epochs,
             validation_data=self.validation_generator,
             validation_steps=self.validation_generator.samples//batch_size)
 
+        # plot history for accuracy
+        plt.plot(history.history['accuracy'])
+        plt.plot(history.history['val_accuracy'])
+        plt.title('model accuracy')
+        plt.ylabel('accuracy')
+        plt.xlabel('epoch')
+        plt.legend(['train', 'test'], loc='lower right')
+        plt.show()
+
+        # plot history for loss
+        plt.plot(history.history['loss'])
+        plt.plot(history.history['val_loss'])
+        plt.title('model loss')
+        plt.ylabel('loss')
+        plt.xlabel('epoch')
+        plt.legend(['train', 'test'], loc='upper right')
+        plt.show()
+
     def evaluate_model(self):
-        self.model.evaluate(self.test_generator)
+        loss, acc = self.model.evaluate(self.test_generator)
+        print('\nTest loss:', loss)
+        print('\nTest accuracy:', acc)
         predictions = self.model.predict(self.test_generator)
         y_pred = np.argmax(np.rint(predictions), axis=1)
         y_true = self.test_generator.classes
