@@ -100,7 +100,7 @@ Confusion Matrix:
 
 Clone repository, create virtualenv, install packages and activate project's virtualenv:
 
-```console
+```bat
 $ git clone https://github.com/BediiAydogan/captcha_decoder.git
 $ cd captcha_decoder
 $ pipenv install
@@ -115,7 +115,7 @@ $ pipenv shell
 
 Decode captcha:
 
-```console
+```bat
 $ python3
 Python 3.8...
 ...
