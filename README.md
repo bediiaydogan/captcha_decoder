@@ -98,16 +98,31 @@ Confusion Matrix:
 
 ## Usage
 
-```python
-import os
-from pathlib import Path
+Clone repository, create virtualenv, install packages and activate project's virtualenv:
 
-from catpcha_decoder import decode_captcha
+```bash
+$ git clone https://github.com/BediiAydogan/captcha_decoder.git
+$ cd captcha_decoder
+$ pipenv install
+Creating a virtualenv for this project...
+...
+No package provided, installing all dependencies.
+Virtualenv location: ...
+Installing dependencies from Pipfile.lock...
+...
+$ pipenv shell
+```
 
-base_dir = Path(__file__).resolve().parent
-filepath = os.path.join(base_dir, 'img', '2a3cd.png')
-model_path = os.path.join(base_dir, 'model_2021_11_07.h5')
+Decode captcha:
 
-captcha = decode_captcha(filepath, model_path)
-print('Decoded Captcha:', captcha)
+```bash
+$ python3
+Python 3.8...
+...
+>>> import os
+>>> from decoder import decode_captcha
+>>> filepath = os.path.join('img', '2a3cd.png')
+>>> captcha = decode_captcha(filepath, 'model_2021_11_07.h5')
+>>> print('Decoded Captcha:', captcha)
+Decoded Captcha: 2a3cd
 ```
